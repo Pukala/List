@@ -42,6 +42,16 @@ TEST_F(TestList, insertElementWithCorrectValue)
     EXPECT_EQ(7, l_sut.getHead()->valueNode);
 }
 
+TEST_F(TestList, correctAddThreeElement)
+{
+    l_sut.insert(7);
+	l_sut.insert(3);
+	l_sut.insert(2);
+	EXPECT_EQ(7, l_sut.getHead()->valueNode);
+	EXPECT_EQ(3, l_sut.getHead()->nextNode->valueNode);
+	EXPECT_EQ(2, l_sut.getHead()->nextNode->nextNode->valueNode);
+}
+
 int main(int argc, char **argv)
 {
     ::testing::InitGoogleTest(&argc, argv);

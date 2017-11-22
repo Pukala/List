@@ -15,6 +15,7 @@ public:
    ~List() = default;
     bool insert(int value = 0);
     bool headIsEmpty() { return headList == nullptr; }
+	bool headHasNextElement() { return headList->nextNode != nullptr; }
     std::shared_ptr<Node> getHead() const { return headList; }
 private:
     std::shared_ptr<Node> headList;

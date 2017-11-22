@@ -9,8 +9,14 @@ bool List::insert(int value)
         headList = newElement;
         return true;
     }
-    else
-    {
-        return false;
-    }
+ 	else
+ 	{
+        std::shared_ptr<Node> copyHead = headList;
+        while(copyHead->nextNode)
+        {
+            copyHead = copyHead->nextNode;
+        }
+        copyHead->nextNode = newElement;
+		return true;
+    } 
 }
