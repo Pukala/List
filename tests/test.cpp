@@ -52,6 +52,21 @@ TEST_F(TestList, correctAddThreeElement)
 	EXPECT_EQ(2, l_sut.getHead()->nextNode->nextNode->valueNode);
 }
 
+TEST_F(TestList, sizeList)
+{
+    l_sut.insert(7);
+	l_sut.insert(3);
+	l_sut.insert(2);
+    EXPECT_EQ(l_sut.size(), 3);
+}
+
+TEST_F(TestList, deleteFirstItem)
+{
+    l_sut.insert(1);
+    l_sut.deleteElement(1);
+    EXPECT_EQ(nullptr, l_sut.getHead());
+}
+
 int main(int argc, char **argv)
 {
     ::testing::InitGoogleTest(&argc, argv);
