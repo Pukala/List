@@ -11,21 +11,26 @@ struct Node
 class List
 {
 public:
-    List(unsigned int _counter = 0) : counter(_counter) { }; 
+    using typeNode = std::shared_ptr<Node>;
+    
+    List(unsigned int Counter = 0) : counter(Counter) { }; 
    ~List() = default;
-    bool insert(int value = 0);
-    bool headIsEmpty() { return headList == nullptr; }
-	bool headHasNextElement() { return headList->nextNode != nullptr; }
-    std::shared_ptr<Node> getHead() const { return headList; }
-    bool deleteElement(int index);
+    typeNode getHead() const { return headList; }
     int size() const { return counter; }
     void showElements() const;
-    unsigned int counter;
+    bool insert(int value = 0);
+    bool headIsEmpty() const { return headList == nullptr; }	
+    bool deleteElement(int index);
+    bool pop_front();
+    bool pop_back();
+    typeNode find(int value) const;
+    
 
 private:
-    std::shared_ptr<Node> goToEndList(const std::shared_ptr<Node> & head);   
-    std::shared_ptr<Node> headList;
-    int headValue() const { return headList->valueNode; }
-    void deleteFirstElement();
-    bool sxdeleteFirstElement(int index);
+    typeNode goToEndList(typeNode & head);   
+    typeNode headList;
+    unsigned int counter;
+    int headValue() const { return headList->valueNode; } 
+    bool deleteMoreThenFirstButNotLast(int index);
+    bool headHasNextElement() { return headList->nextNode != nullptr; }
 };

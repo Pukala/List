@@ -21,7 +21,7 @@ bool List::insert(int value)
     return false;
 }
 
-std::shared_ptr<Node> List::goToEndList(const std::shared_ptr<Node> & head)
+List::typeNode List::goToEndList(typeNode & head)
 {
     std::shared_ptr<Node> ptr = head;
     while(ptr->nextNode)
@@ -36,18 +36,83 @@ bool List::deleteElement(int index)
     if(headIsEmpty()) { return false; }
     else if(index == 1)
     {
-        deleteFirstElement();
+        return pop_front();
     }
-
-
+    
+    else if((index > 1) && (index < counter))
+    {
+        return deleteMoreThenFirstButNotLast(index);
+    }
+    else if(index == counter)
+    {
+        return pop_back();
+    }
 }
 
-void List::deleteFirstElement()
+bool List::pop_front()
 {
     headList = headList->nextNode;
+    counter--;
+    if(headList)
+    {
+        return false;
+    }
+    else
+    {
+        return true;
+    }
 }
 
+bool List::deleteMoreThenFirstButNotLast(int index)
+{
+    unsigned int position = 0;
+    std::shared_ptr<Node> copyHead = headList;
+    while(copyHead->nextNode->nextNode && index <= position)
+    {
+        copyHead = copyHead->nextNode;
+        position++;
+    }
+    
+    copyHead->nextNode= copyHead->nextNode->nextNode;
+    counter--;
 
+    if(copyHead->nextNode)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool List::pop_back()
+{
+    auto copyHead = goToEndList(headList);
+    copyHead = nullptr;
+    counter--;
+    if(copyHead)
+    {
+        return false;
+    }
+    else
+    {
+        return true;
+    }
+
+}
+
+List::typeNode List::find(int value) const
+{
+   if(!(headList))
+   {
+       return nullptr;
+   }
+   if(headList->valueNode == value)
+   {
+       return headList;
+   }
+}
 
 void List::showElements() const
 {
