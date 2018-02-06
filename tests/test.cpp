@@ -16,18 +16,6 @@ TEST_F(TestList, HeadIsNullInEmptyList)
     EXPECT_EQ(nullptr, l_sut.getHead());      
 }
 
-TEST_F(TestList, initNodeWithValue)
-{
-    Node nodeObj(5);
-    EXPECT_EQ(5, nodeObj.valueNode);      
-}
-
-TEST_F(TestList, initNodeWithNullNext)
-{
-    Node nodeObj(5);
-    EXPECT_EQ(nullptr, nodeObj.nextNode);      
-}
-
 TEST_F(TestList, HeadIsEmpty)
 {
     EXPECT_EQ(true, l_sut.headIsEmpty());
