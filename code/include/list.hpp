@@ -3,33 +3,32 @@
 #include <iostream>
 
 template<typename T>
+struct Node
+{
+    Node(T value) : valueNode(value) { }
+    T valueNode;
+    std::shared_ptr<Node> nextNode;
+};
+
+template<typename T>
 class List
 {
-private:
-     struct Node
-    {
-        Node(T value) : valueNode(value) { }
-        T valueNode;
-        std::shared_ptr<Node> nextNode;
-    };
 public:
-    
-    using typeNode = std::shared_ptr<Node>;
     List(unsigned int Counter = 0) : counter(Counter) { }; 
     ~List() = default;
-    typeNode getHead() const { return headList; }
+    std::shared_ptr<Node<T>> getHead() const { return headList; }
     int size() const { return counter; }
     void showElements() const;
-    bool insert(int value);
+    bool insert(T value);
     bool headIsEmpty() const { return headList == nullptr; }	
     bool deleteElement(int index);
     bool pop_front();
     bool pop_back();
-    typeNode find(T value) const;
+    std::shared_ptr<Node<T>> find(T value) const;
     
 private:
-    typeNode goToEndList(typeNode & head);   
-    typeNode headList;
+    std::shared_ptr<Node<T>> goToEndList(std::shared_ptr<Node<T>> & head);   
+    std::shared_ptr<Node<T>> headList;
     unsigned int counter;
     int headValue() const { return headList->valueNode; } 
     bool deleteMoreThenFirstButNotLast(int index);
@@ -38,9 +37,9 @@ private:
 };
 
 template<typename T>
-bool List<T>::insert(int value)
+bool List<T>::insert(T value)
 {
-    auto newElement = std::make_shared<Node>(value); 
+    auto newElement = std::make_shared<Node<T>>(value); 
     
     if(headIsEmpty())
     {
@@ -59,9 +58,9 @@ bool List<T>::insert(int value)
 }
 
 template<typename T>
-std::shared_ptr<Node> List<T>::goToEndList(typeNode & head)
+std::shared_ptr<Node<T>> List<T>::goToEndList(std::shared_ptr<Node<T>> & head)
 {
-    std::shared_ptr<Node> ptr = head;
+    std::shared_ptr<Node<T>> ptr = head;
     while(ptr->nextNode)
     {
         ptr = ptr->nextNode;
@@ -69,7 +68,8 @@ std::shared_ptr<Node> List<T>::goToEndList(typeNode & head)
     return ptr;
 }
 
-bool List::deleteElement(int index)
+template<typename T>
+bool List<T>::deleteElement(int index)
 {
     if(headIsEmpty()) { return false; }
     else if(index == 1)
@@ -87,7 +87,8 @@ bool List::deleteElement(int index)
     }
 }
 
-bool List::pop_front()
+template<typename T>
+bool List<T>::pop_front()
 {
     headList = headList->nextNode;
     counter--;
@@ -101,10 +102,11 @@ bool List::pop_front()
     }
 }
 
-bool List::deleteMoreThenFirstButNotLast(int index)
+template<typename T>
+bool List<T>::deleteMoreThenFirstButNotLast(int index)
 {
     unsigned int position = 0;
-    std::shared_ptr<Node> copyHead = headList;
+    std::shared_ptr<Node<T>> copyHead = headList;
     while(copyHead->nextNode->nextNode && index <= position)
     {
         copyHead = copyHead->nextNode;
@@ -124,7 +126,8 @@ bool List::deleteMoreThenFirstButNotLast(int index)
     }
 }
 
-bool List::pop_back()
+template<typename T>
+bool List<T>::pop_back()
 {
     auto copyHead = goToEndList(headList);
     copyHead = nullptr;
@@ -140,7 +143,8 @@ bool List::pop_back()
 
 }
 
-List::typeNode List::find(int value) const
+template<typename T>
+std::shared_ptr<Node<T>> List<T>::find(T value) const
 {
    if(!(headList))
    {
@@ -152,14 +156,16 @@ List::typeNode List::find(int value) const
    }
 }
 
-void List::showElements() const
+template<typename T>
+void List<T>::showElements() const
 {
     std::cout << "show\n";
-    std::shared_ptr<Node> copyHead = headList;
+    std::shared_ptr<Node<T>> copyHead = headList;
     while(copyHead)
     {
         std::cout << copyHead->valueNode << std::endl;
         copyHead = copyHead->nextNode;
     }
 }
+
 
